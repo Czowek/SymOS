@@ -1,2 +1,50 @@
 # SymOS
-Simple text based operating system.
+
+Welcome to SymOS, a delightful project that brings the simulation of a text-based operating system (Linux-like) to your fingertips. SymOS is and always will be Open-Source.
+
+## Features
+
+- **Basic File and Directory Management:**
+  ![YAP](https://imgur.com/NjvYQ9B.png)
+  ![YAP](https://i.imgur.com/B0K7jwR.png)
+
+- **System Information Display:**
+  ![YAP](https://imgur.com/ToMjhgB.png)
+
+- **User Authentication and Password Protection:**
+  ![Logging-in](https://i.imgur.com/RMCP1Li.png))
+
+- **System Logging (on your PC only):**
+  ![YAP](https://imgur.com/eEAzExp.png)
+
+- **User Logging (on your PC only):**
+  ![YAP](https://imgur.com/HRg4Hcs.png)
+
+- **Command-Line Interface:**
+  ![YAP](https://imgur.com/PbA8Pns.png)
+
+## About
+
+This project emerged from the depths of boredom and a keen desire to delve into the intricacies of operating in Python. With 13 commands and counting, SymOS is a testament to the journey of learning and exploration.
+![image](https://github.com/Czowek/SymOS/assets/154842302/aedf0061-6daa-4190-a2fc-8e7a95811dda)
+
+## Project Information
+
+- **Created by:** Czowek
+- **GitHub:** [Czowek](https://github.com/Czowek)
+- **Version:** 1.0
+- **License:** MIT
+- **Last Update:** 26.12.2023 01:35 AM
+
+## Usage
+
+1. Clone the repository: `git clone https://github.com/Czowek/SymOS.git`
+2. Run `python symos.py` or open `run.bat` to start SymOS.
+
+## Acknowledgments
+
+Thanks for choosing SymOS! Embrace the experience!
+
+---
+
+**Note:** SymOS is a personal project crafted for learning and experimentation. It may not be suitable for production use.
