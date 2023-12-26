@@ -2,7 +2,7 @@
 
 Welcome to SymOS, a fun little project that simulates a text-based operating system (Linux-like). **SymOS is and always will be Open-Source.**
 
-Video about installation and usage: ![link](https://youtu.be/zl76--JyiaY)
+Video about installation and usage: [![ALT TEXT](https://img.youtube.com/vi/zl76--JyiaY/0.jpg)](https://www.youtube.com/watch?v=zl76--JyiaY)
 
 ## Features
 
