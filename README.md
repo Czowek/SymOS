@@ -1,6 +1,6 @@
 # SymOS
 
-Welcome to SymOS, a delightful project that brings the simulation of a text-based operating system (Linux-like) to your fingertips. SymOS is and always will be Open-Source.
+Welcome to SymOS, a fun little project that simulates a text-based operating system (Linux-like). **SymOS is and always will be Open-Source.**
 
 ## Features
 
@@ -25,7 +25,7 @@ Welcome to SymOS, a delightful project that brings the simulation of a text-base
 
 ## About
 
-This project emerged from the depths of boredom and a keen desire to delve into the intricacies of operating in Python. With 13 commands and counting, SymOS is a testament to the journey of learning and exploration.
+This project made it's way into my head when I was bored as hell! It has 13 commands and there will be more!
 ![image](https://github.com/Czowek/SymOS/assets/154842302/aedf0061-6daa-4190-a2fc-8e7a95811dda)
 
 ## Project Information
@@ -43,7 +43,7 @@ This project emerged from the depths of boredom and a keen desire to delve into 
 
 ## Acknowledgments
 
-Thanks for choosing SymOS! Embrace the experience!
+Thanks for choosing SymOS!
 
 ---
 
