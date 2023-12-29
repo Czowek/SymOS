@@ -25,18 +25,23 @@ Video about installation and usage: [Video](https://youtu.be/zl76--JyiaY)
 - **Command-Line Interface:**
   ![YAP](https://imgur.com/PbA8Pns.png)
 
+- **Messaging system bettwen users:**
+  ![image](https://github.com/Czowek/SymOS/assets/154842302/c8acfe1d-37d0-48ac-9156-af3ad076d7da)
+
+
 ## About
 
 This project made it's way into my head when I was bored as hell! It has 13 commands and there will be more!
-![image](https://github.com/Czowek/SymOS/assets/154842302/aedf0061-6daa-4190-a2fc-8e7a95811dda)
+![image](https://github.com/Czowek/SymOS/assets/154842302/ec75a4e2-3ea3-422d-9396-d421a4f93dd8)
+
 
 ## Project Information
 
 - **Created by:** Czowek
 - **GitHub:** [Czowek](https://github.com/Czowek)
-- **Version:** 1.0
+- **Version:** 1.0.1
 - **License:** MIT
-- **Last Update:** 26.12.2023 01:35 AM
+- **Last update:** 29.12.2023 09:35 PM
 
 ## Usage
 
