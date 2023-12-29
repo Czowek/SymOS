@@ -4,9 +4,11 @@ import psutil
 import getpass
 from datetime import datetime
 from colorama import Fore, Style, init
+import msvcrt
 
 init(autoreset=True)  # Initialize colorama
 
+MESSAGES_FOLDER = "messages" #folder for the messages
 ROOT_FOLDER = os.getcwd()  # Set the root folder to the current working directory
 PASSWORDS_FOLDER = "passwords"  # Folder to store passwords
 USERS_FOLDER = "users"  # Folder to store user information
@@ -32,9 +34,9 @@ def about_symos():
 
                   f"Created by: Czowek \n"
                   f"Github: https://github.com/Czowek \n"
-                  f"Version: 1.0 \n"
+                  f"Version: 1.0.1 \n"
                   f"License: MIT \n"
-                  f"Last update: 26.12.2023 01:35 AM \n"
+                  f"Last update: 29.12.2023 09:35 PM \n"
                   f"{Fore.LIGHTBLUE_EX}Thanks for using SymOS!{Style.RESET_ALL} \n"
                   f"{Fore.GREEN}Enjoy!{Style.RESET_ALL}")
 def create_passwords_folder():
@@ -44,6 +46,10 @@ def create_passwords_folder():
         # Create an empty __init__.py file to indicate that "passwords" is a package
         with open(os.path.join(passwords_folder_path, "__init__.py"), 'w'):
             pass
+def logout(username):
+    print(f"{Fore.YELLOW}Logging out user '{username}'.")
+    log_system_event(f"User '{username}' logged out.")
+    return None
 
 def create_users_folder():
     users_folder_path = os.path.join(ROOT_FOLDER, USERS_FOLDER)
@@ -54,6 +60,8 @@ def create_user_folder(username):
     user_folder_path = os.path.join(USERS_PATH, username)
     if not os.path.exists(user_folder_path):
         os.mkdir(user_folder_path)
+        messages_folder_path = os.path.join(user_folder_path, MESSAGES_FOLDER)
+        os.mkdir(messages_folder_path)
         # Create an empty user_log.txt file to store user events
         with open(os.path.join(user_folder_path, "user_log.txt"), 'a'):
             pass
@@ -95,12 +103,14 @@ def show_commands():
     print(f"{Fore.CYAN}6. create <file_name> - Create a new text file")
     print(f"{Fore.CYAN}7. edit <file_name> - Add content to a text file")
     print(f"{Fore.CYAN}8. open <file_name> - Display the content of a text file")
-    print(f"{Fore.CYAN}9 sysinfo - Display system information")
-    print(f"{Fore.CYAN}9. help - Display this")
-    print(f"{Fore.CYAN}10. showtime - Display time")
-    print(f"{Fore.CYAN}11. exit - Exit SymOS")
-    print(f"{Fore.CYAN}12. clear - Clear the screen")
-    print(f"{Fore.CYAN}13. about - Display information about SymOS")
+    print(f"{Fore.CYAN}9. sysinfo - Display system information")
+    print(f"{Fore.CYAN}10. help - Display this")
+    print(f"{Fore.CYAN}11. showtime - Display time")
+    print(f"{Fore.CYAN}12. exit - Exit SymOS")
+    print(f"{Fore.CYAN}13. clear - Clear the screen")
+    print(f"{Fore.CYAN}14. inbox - Show your inbox")
+    print(f"{Fore.CYAN}15. about - Display information about SymOS")
+    print(f"{Fore.CYAN}16. send <username> <message> - Send a message to another user")
     print(Style.RESET_ALL)
 
 def get_system_info():
@@ -166,15 +176,60 @@ def open_file(file_name, username):
 
 def edit_file(file_name, username):
     try:
-        with open(file_name, 'a') as file:
-            content = input(f"{Fore.CYAN}Enter text to add to the file (press Enter to finish):\n")
-            file.write(content + '\n')
+        with open(file_name, 'r+') as file:
+            lines = file.readlines()
+            line_number = 1
+
+            while True:
+                print(f"{Fore.CYAN}{line_number}| {Fore.RESET}", end="")
+
+                for line in lines:
+                    print(line, end="")
+
+                print(Style.RESET_ALL)
+                print(f"{Fore.GREEN}Type your text (press Enter to finish, 'q' to quit): ", end="")
+                content = input()
+
+                if content.lower() == 'q':
+                    break
+
+                lines.append(content + '\n')
+                line_number += 1
+
+            # Clear the file content and write the modified lines
+            file.seek(0)
+            file.truncate()
+            file.writelines(lines)
+
             print(f"{Fore.GREEN}Content added to '{file_name}'.")
     except FileNotFoundError:
         print(f"{Fore.RED}Error: File '{file_name}' not found.")
     except PermissionError:
         print(f"{Fore.RED}Error: Access denied. Make sure you have the necessary permissions.")
+    except Exception as e:
+        print(f"{Fore.RED}Error: {e}")
+    finally:
+        print(Style.RESET_ALL)
+
+def send_message(sender, recipient, message):
+    messages_path = os.path.join(USERS_PATH, recipient, MESSAGES_FOLDER)
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    message_content = f"{timestamp} - {sender}: {message}\n"
+    
+    with open(os.path.join(messages_path, f"{sender}.txt"), 'a') as file:
+        file.write(message_content)
+
+def inbox(username):
+    messages_path = os.path.join(USERS_PATH, username, MESSAGES_FOLDER)
+    print(f"{Fore.CYAN}Inbox for {username}:\n")
+    
+    for filename in os.listdir(messages_path):
+        sender = os.path.splitext(filename)[0]
+        with open(os.path.join(messages_path, filename), 'r') as file:
+            print(f"{Fore.GREEN}{sender}:\n{file.read()}")
+    
     print(Style.RESET_ALL)
+
 
 def delete_file(file_name, username):
     try:
@@ -186,7 +241,6 @@ def delete_file(file_name, username):
         print(f"{Fore.RED}Error: Access denied. Make sure you have the necessary permissions.")
     print(Style.RESET_ALL)
 
-
 def set_password(username, password, user_who_set_password=None):
     PASSWORDS[username] = password
     save_passwords()
@@ -196,6 +250,8 @@ def set_password(username, password, user_who_set_password=None):
     else:
         log_system_event(f"Password set for '{username}'.")
 
+def guwno_w_dupie():
+    print("kupka")
 
 def verify_password(username):
     if username in PASSWORDS:
@@ -279,15 +335,32 @@ def SymOS():
             try:
                 new_dir = user_input[5:]
                 target_dir = os.path.join(current_dir, new_dir)
-                if os.path.relpath(target_dir, current_dir).startswith('..'):
-                    print(f"{Fore.RED}Error: Cannot navigate outside of the current directory.")
-                else:
+                users_path = os.path.abspath(USERS_PATH)
+
+                if os.path.abspath(target_dir) == users_path:
+                    print(f"{Fore.RED}Error: Cannot navigate into the 'users' folder.")
+                    log_system_event(f"User '{username}' attempted to navigate into the 'users' folder.")
+                elif os.path.abspath(target_dir).startswith(users_path):
                     os.chdir(target_dir)
                     current_dir = os.getcwd()
-                    log_system_event(f"User '{username}' moved to '{current_dir}' using 'goto' command.")
+                    log_system_event(f"User '{username}' moved to directory '{new_dir}'.")
+                else:
+                    print(f"{Fore.RED}Error: Cannot navigate outside of the home directory")
+                log_system_event(f"User '{username}' attempted to navigate outside of the home directory.")
             except Exception as e:
                 print(f"{Fore.RED}Error: {e}")
             print(Style.RESET_ALL)
+
+        elif user_input.lower().startswith('send '):
+            _, recipient, *message_content = user_input.split(' ', 2)
+            message = ' '.join(message_content)
+            send_message(username, recipient, message)
+            print(f"{Fore.GREEN}Message sent to {recipient}.")
+            print(Style.RESET_ALL)
+
+        elif user_input.lower() == 'inbox':
+            inbox(username)
+
         elif user_input.lower().startswith('mkdir '):
             try:
                 new_dir = user_input[6:]
@@ -348,6 +421,8 @@ def SymOS():
             except Exception as e:
                 print(f"{Fore.RED}Error: {e}")
             print(Style.RESET_ALL)
+        elif user_input.lower() == 'guwno':
+            guwno_w_dupie()
         elif user_input.lower() == 'about':
             about_symos()
         elif user_input.lower() == 'help':
