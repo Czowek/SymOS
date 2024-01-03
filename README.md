@@ -31,7 +31,7 @@ Video about installation and usage: [Video](https://youtu.be/zl76--JyiaY)
 
 ## About
 
-This project made it's way into my head when I was bored as hell! It has 13 commands and there will be more!
+This project made it's way into my head when I was bored as hell! It has 16 commands and there will be more!
 ![image](https://github.com/Czowek/SymOS/assets/154842302/ec75a4e2-3ea3-422d-9396-d421a4f93dd8)
 
 
